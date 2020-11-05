@@ -6,29 +6,29 @@ using System.Web.Mvc;
 
 namespace Projekt_ANM.Controllers
 {
-    public class HomeController : Controller
+    public class ManageController : Controller
     {
+        // GET: Manage
         public ActionResult Index()
         {
             return View();
         }
-
-        public ActionResult About()
+        public ActionResult AddCar()
         {
-            ViewBag.Message = "Your application description page.";
 
             return View();
         }
-
-        public ActionResult Contact()
+        public ActionResult AddUser()
         {
-            ViewBag.Message = "Your contact page.";
 
             return View();
         }
-       
-       
-        public ActionResult Reservation()
+        public ActionResult DeleteUser()
+        {
+
+            return View();
+        }
+        public ActionResult ManageCars()
         {
 
             return View();

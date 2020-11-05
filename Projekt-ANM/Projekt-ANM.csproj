@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -45,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -120,17 +127,113 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CurrentController.cs" />
+    <Compile Include="Controllers\HistoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DAL\ANMContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cars.cs" />
+    <Compile Include="Models\Current.cs" />
+    <Compile Include="Models\Histories.cs" />
+    <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\auta\WVWZZZ16ZCM140128.JPG" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140634.JPG" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140910.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140911.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140912.JPG" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140914.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140916.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140917.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140918.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140919.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140920.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140921.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140922.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140923.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140924.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140925.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140926.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140928.JPG" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140930.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140931.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140932.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140933.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140934.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140935.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140936.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140937.JPG" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140938.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140939.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140940.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140941.jpg" />
+    <Content Include="Content\auta\WVWZZZ16ZCM140942.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\css\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="Content\bootstrap\js\bootstrap-datetimepicker.js" />
+    <Content Include="Content\bootstrap\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="Content\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.ar.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.az.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.bg.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.bn.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.ca.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.cs.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.da.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.de.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.ee.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.el.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.es.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.fi.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.fr.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.he.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.hr.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.hu.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.hy.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.id.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.is.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.it.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.ja.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.ka.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.ko.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.lt.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.lv.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.ms.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.nb.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.nl.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.no.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.pl.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.pt-BR.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.pt.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.ro.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.rs-latin.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.rs.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.ru.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.sk.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.sl.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.sv.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.sw.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.th.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.tr.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.ua.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.uk.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.zh-CN.js" />
+    <Content Include="Content\bootstrap\js\locales\bootstrap-datetimepicker.zh-TW.js" />
+    <Content Include="Content\jquery\jquery-1.8.3.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -162,10 +265,24 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Reservation.cshtml" />
+    <Content Include="Views\Manage\AddUser.cshtml" />
+    <Content Include="Views\Manage\DeleteUser.cshtml" />
+    <Content Include="Views\Manage\AddCar.cshtml" />
+    <Content Include="Views\Manage\ManageCars.cshtml" />
+    <Content Include="Views\Current\Create.cshtml" />
+    <Content Include="Views\Current\Delete.cshtml" />
+    <Content Include="Views\Current\Details.cshtml" />
+    <Content Include="Views\Current\Edit.cshtml" />
+    <Content Include="Views\Current\Index.cshtml" />
+    <Content Include="Views\Histories\Create.cshtml" />
+    <Content Include="Views\Histories\Delete.cshtml" />
+    <Content Include="Views\Histories\Details.cshtml" />
+    <Content Include="Views\Histories\Edit.cshtml" />
+    <Content Include="Views\Histories\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -213,7 +330,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

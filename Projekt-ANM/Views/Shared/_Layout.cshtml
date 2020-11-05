@@ -16,13 +16,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("System rezerwacji aut", "Reservation", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse" style="float: right">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Zarządzaj<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Dodaj użytkownika", "AddUser", "Manage")</li>
+                            <li>@Html.ActionLink("Usuń użytkownika", "DeleteUser", "Manage")</li>
+                            <li>@Html.ActionLink("Dodaj samochód", "AddCar", "Manage")</li>
+                            <li>@Html.ActionLink("Zarządzaj samochodami", "ManageCars", "Manage")</li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Rezerwacja", "Reservation", "Home")</li>
+                    <li>@Html.ActionLink("Bieżące", "Index", "Current")</li>
+                    <li>@Html.ActionLink("Historia", "Index", "Histories")</li>
                 </ul>
             </div>
         </div>

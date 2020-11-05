@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Reservation";
+}
+
+<h2>Reservation</h2>
+<form class="formularz_rez bg-light" action="rezerwacja.php" method="get">
+
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label">Data wypożyczenia</label>
+            <div class="controls input-append date form_datetime" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_start">
+                <input class="pola_rezerwacji" size="16" type="text" value="" data-date-end-date="0d" readonly>
+                <span class="pola_rezerwacji add-on"><i class="icon-remove"></i></span>
+                <span class="pola_rezerwacji add-on"><i class="icon-th"></i></span>
+            </div>
+            <input type="hidden" id="dtp_start" name="dtp_start" value="" /><br />
+        </div>
+    </fieldset>
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label">Data zwrotu</label>
+            <div class="controls input-append date form_datetime" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_stop">
+                <input class="pola_rezerwacji" size="20" type="text" value="" readonly>
+                <span class="pola_rezerwacji add-on"><i class="icon-remove"></i></span>
+                <span class="pola_rezerwacji add-on"><i class="icon-th"></i></span>
+            </div>
+            <input type="hidden" id="dtp_stop" name="dtp_stop" value="" /><br />
+        </div>
+    </fieldset>
+
+    <input class="btn btn-primary btn-md przycisk_szuk" type="submit" name="szukaj_auta" value="Szukaj" />
+</form>
+
+
+
+<script type="text/javascript" src="~/Content/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="~/Content/bootstrap/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="~/Content/bootstrap/js/locales/bootstrap-datetimepicker.pl.js" charset="UTF-8"></script>
+<script type="text/javascript">
+
+
+    $('.form_datetime').datetimepicker({
+        language: 'PL',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 0
+    });
+</script>
