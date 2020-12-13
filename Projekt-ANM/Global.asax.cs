@@ -14,12 +14,14 @@ namespace Projekt_ANM
     {
         protected void Application_Start()
         {
-            Database.SetInitializer<ANMContext>(null);
+            //Database.SetInitializer<ANMContext>(null);
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            Database.SetInitializer(new ANMInitializer());
+
         }
     }
 }
