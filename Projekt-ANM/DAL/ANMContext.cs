@@ -17,6 +17,7 @@ namespace Projekt_ANM.DAL
         public DbSet<Histories> Histories { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<Users> Users { get; set; }
+        public DbSet<RentalCar> RentalCars { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Projekt_ANM.Models.RentalCar>
+
+@{
+    ViewBag.Title = "Wypożycz samochód";
+}
+
+<h2>Wypożycz samochód</h2>
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CarName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CarRegistration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VIN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductionYear)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarRegistration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VIN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductionYear)
+            </td>
+            <td>
+                @Html.ActionLink("Wypożycz", "Rent", new { id = item.ID }, new { @class = "btn btn-success" }) 
+            </td>
+        </tr>
+    }
+
+</table>

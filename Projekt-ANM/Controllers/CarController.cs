@@ -11,46 +11,43 @@ using Projekt_ANM.Models;
 
 namespace Projekt_ANM.Controllers
 {
+    //Zabezpieczenie przed nieautoryzowanym dostępem
+    [Authorize(Roles = "Administrator")]
     public class CarController : Controller
     {
+        //Inicjalizacja bazy
         private ANMContext db = new ANMContext();
 
-        // GET: Car
+        // GET: Załadowanie widoku listy samochodów
         public ActionResult Index()
         {
             return View(db.Cars.ToList());
         }
 
-        // GET: Car/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Car car = db.Cars.Find(id);
-            if (car == null)
-            {
-                return HttpNotFound();
-            }
-            return View(car);
-        }
-
-        // GET: Car/Create
+        // GET: Załadowanie widoku dodaj samochód
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Car/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Funkcja dodawania samochodu
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,CarName,CarRegistration,VIN,ProductionYear")] Car car)
         {
+
             if (ModelState.IsValid)
-            {
+            {    
+                foreach (var item in db.Cars)
+                {
+                    if (item.VIN == car.VIN)
+                    {
+                        ModelState.AddModelError("ProductionYear", "Istnieje już taki samochód.");
+
+                        return View("Create");
+                    }
+
+                }
                 db.Cars.Add(car);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -59,7 +56,7 @@ namespace Projekt_ANM.Controllers
             return View(car);
         }
 
-        // GET: Car/Edit/5
+        // GET: Załadowanie widoku edycji samochodu (id = numer samochodu na liscie)
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -74,9 +71,7 @@ namespace Projekt_ANM.Controllers
             return View(car);
         }
 
-        // POST: Car/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Funkcja edycji samochodu
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,CarName,CarRegistration,VIN,ProductionYear")] Car car)
@@ -90,7 +85,7 @@ namespace Projekt_ANM.Controllers
             return View(car);
         }
 
-        // GET: Car/Delete/5
+        // GET: Załadowanie widoku usuwania samochodu(id = numer samochodu na liscie)
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,13 +100,15 @@ namespace Projekt_ANM.Controllers
             return View(car);
         }
 
-        // POST: Car/Delete/5
+        // POST: Funkcja usuwania samochodu
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Car car = db.Cars.Find(id);
+            Current current = db.Current.Find(id);
             db.Cars.Remove(car);
+            db.Current.Remove(current);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Projekt_ANM.Models.Current>
+
+@{
+    ViewBag.Title = "Historia rezerwacji";
+}
+<h2>@ViewBag.Title</h2>
+
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Car)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CarRegistration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RentalDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReturnDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Car)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarRegistration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentalDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            </td>
+            
+        </tr>
+    }
+</table>

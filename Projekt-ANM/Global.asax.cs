@@ -1,4 +1,4 @@
-﻿using Projekt_ANM.DAL;
+using Projekt_ANM.DAL;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,14 +14,12 @@ namespace Projekt_ANM
     {
         protected void Application_Start()
         {
-            //Database.SetInitializer<ANMContext>(null);
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Database.SetInitializer(new ANMInitializer());
-
         }
     }
 }

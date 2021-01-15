@@ -3,9 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - System rezerwacji aut</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @*<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />*@
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -20,19 +22,30 @@
             </div>
             <div class="navbar-collapse collapse" style="float: right">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Zarządzaj<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Dodaj użytkownika", "AddUser", "Manage")</li>
-                            <li>@Html.ActionLink("Usuń użytkownika", "DeleteUser", "Manage")</li>
-                            <li>@Html.ActionLink("Dodaj samochód", "AddCar", "Manage")</li>
-                            <li>@Html.ActionLink("Zarządzaj samochodami", "Index", "Car")</li>
-                        </ul>
-                    </li>
-                    <li>@Html.ActionLink("Rezerwacja", "Reservation", "Home")</li>
-                    <li>@Html.ActionLink("Bieżące", "Index", "Current")</li>
-                    <li>@Html.ActionLink("Historia", "Index", "Histories")</li>
+                    @if (User.IsInRole("Użytkownik") || User.IsInRole("Administrator"))
+                    {
+
+                        <li>@Html.ActionLink("Rezerwacja", "Reservation", "Home")</li>
+                        <li>@Html.ActionLink("Bieżące", "Index", "Current")</li>
+                        <li>@Html.ActionLink("Historia", "Histories", "Current")</li>
+
+                    }
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Zarządzaj<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+
+                                <li>@Html.ActionLink("Dodaj użytkownika", "Register", "Account")</li>
+                                <li>@Html.ActionLink("Zarządzaj użytkownikami", "Index", "Users")</li>
+                                <li>@Html.ActionLink("Dodaj samochód", "Create", "Car")</li>
+                                <li>@Html.ActionLink("Zarządzaj samochodami", "Index", "Car")</li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
+                @Html.Partial("_LoginPartial")
+
             </div>
         </div>
     </div>
@@ -40,11 +53,13 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - System rezerwacji aut</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/moment")
+
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

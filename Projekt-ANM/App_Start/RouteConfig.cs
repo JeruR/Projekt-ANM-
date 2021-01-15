@@ -16,7 +16,7 @@ namespace Projekt_ANM
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Reservation", id = UrlParameter.Optional }
             );
         }
     }
