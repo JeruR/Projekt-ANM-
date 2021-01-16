@@ -12,12 +12,13 @@ using Projekt_ANM.Models;
 
 namespace Projekt_ANM.Controllers
 {
+    //Zabezpieczenie przed nieautoryzowanym dostępem  dostępne tylko dla Administratora
     [Authorize(Roles = "Administrator")]
     public class UsersController : Controller
     {
         private ANMContext db = new ANMContext();
 
-        // GET: Users
+        // GET: Załadowanie widoku użytkowników
         public ActionResult Index()
         {
         
@@ -25,15 +26,13 @@ namespace Projekt_ANM.Controllers
         }
 
      
-        // GET: Users/Create
+        // GET: Załadowanie widoku nowego użytkownika
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Funkcja dodająca nowego użytkownika do bazy
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Login,Name,Surname")] Users users)
@@ -47,6 +46,8 @@ namespace Projekt_ANM.Controllers
 
             return View(users);
         }
+    
+        //Funkcja zmiany hasła dla administratora parametrem jest id użytkownika z bazy
         public ActionResult ChangePassword(string id)
         {
             if (id == null)

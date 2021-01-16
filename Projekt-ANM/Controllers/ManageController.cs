@@ -9,7 +9,8 @@ using Microsoft.Owin.Security;
 using Projekt_ANM.Models;
 
 namespace Projekt_ANM.Controllers
-{
+{    
+    //Zabezpieczenie przed nieautoryzowanym dostępem
     [Authorize]
     public class ManageController : Controller
     {
@@ -52,11 +53,12 @@ namespace Projekt_ANM.Controllers
             }
         }
 
+        // Przekierowania do użytkowników
         public ActionResult ReturnUsers()
         {
             return new RedirectResult(@"~\Users\Index");
         }
-        //
+
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
@@ -81,11 +83,10 @@ namespace Projekt_ANM.Controllers
             return View(model);
         }
 
-  
-      
+        //Statyczna zmienna która przechowuje id użytkownika
         private static string Local;
-        //
-        // GET: /Manage/ChangePassword
+
+        // GET: Załadowanie widoku zmiany hasła
         public ActionResult ChangePassword()
         {
             if (TempData["passedit"] != null )
@@ -95,11 +96,8 @@ namespace Projekt_ANM.Controllers
             }         
             return View();
         }
-   
 
-
-        //
-        // POST: /Manage/ChangePassword
+        // POST: Funkcja zmiany hasła
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
@@ -125,7 +123,9 @@ namespace Projekt_ANM.Controllers
                 var user = await UserManager.FindByIdAsync(xuser);
                 if (user != null)
                 {
-                    //
+                    //Wyłączone ponieważ:
+                    //Użytkownik zawsze musi być zalogowany by wykonać operację zmiany hasła
+                    //Administrator po zmianie hasła może logować się na drugie konto
                   //  await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
                 if (TempData["local"] != null)

@@ -11,7 +11,7 @@ using Projekt_ANM.Models;
 
 namespace Projekt_ANM.Controllers
 {
-    //Zabezpieczenie przed nieautoryzowanym dostępem
+    //Zabezpieczenie przed nieautoryzowanym dostępem dostępne tylko dla Administratora
     [Authorize(Roles = "Administrator")]
     public class CarController : Controller
     {

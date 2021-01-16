@@ -13,6 +13,7 @@ using Projekt_ANM.Models;
 
 namespace Projekt_ANM.Controllers
 {
+    //Zabezpieczenie przed nieautoryzowanym dostępem
     [Authorize]
     public class AccountController : Controller
     {
@@ -24,13 +25,13 @@ namespace Projekt_ANM.Controllers
         {
             context = new ApplicationDbContext();
         }
+
+        // Zaczytaniew użytkowników do listy
         public List<ApplicationUser> GetUsers()
         {
             return context.Users.ToList();
         }  
      
-
-
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;
@@ -61,8 +62,7 @@ namespace Projekt_ANM.Controllers
             }
         }
 
-        //
-        // GET: /Account/Login
+        // GET: Załadowanie widoku logowania
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -70,8 +70,7 @@ namespace Projekt_ANM.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Login
+        // POST: Funkcja weryfikująca dane logowania
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -81,9 +80,6 @@ namespace Projekt_ANM.Controllers
             {
                 return View(model);
             }
-
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
             var user = await UserManager.FindByEmailAsync(model.Email);
             var result = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
@@ -96,24 +92,21 @@ namespace Projekt_ANM.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Nieprawidłowa próba logowania.");
                     return View(model);
             }
         }
 
-       
-
-        //
-        // GET: /Account/Register
+        // GET: Załadowanie widoku rejestracji dostępne tylko dla Administratora
         [Authorize(Roles = "Administrator")]
         public ActionResult Register()
         {
+            //Załadowanie ról
             ViewBag.Name = new SelectList(context.Roles.ToList(), "Name", "Name");
             return View();
         }
 
-        //
-        // POST: /Account/Register
+        // POST: Funkcja rejestracji użytkownika dostępne tylko dla Administratora
         [HttpPost]
         [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
@@ -125,29 +118,16 @@ namespace Projekt_ANM.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                   // await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
-
                     return RedirectToAction("Reservation", "Home");
                 }
                 AddErrors(result);
             }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-     
-
-
-        //
-        // POST: /Account/LogOff
+        // POST: Wylogownaie użytkownika
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -155,8 +135,6 @@ namespace Projekt_ANM.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Login", "Account");
         }
-
-      
 
         protected override void Dispose(bool disposing)
         {

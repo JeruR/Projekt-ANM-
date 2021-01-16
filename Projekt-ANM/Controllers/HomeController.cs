@@ -7,10 +7,12 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace Projekt_ANM.Controllers
-{
+{    
+    //Zabezpieczenie przed nieautoryzowanym dostępem
     [Authorize]
     public class HomeController : Controller
-    {
+    { 
+        // GET: Załadowanie widoku rezerwacji
         [HttpGet]
         public ActionResult Reservation()
         {
@@ -25,6 +27,8 @@ namespace Projekt_ANM.Controllers
 
             }
         }
+
+        // POST: Funkcja werfikująca daty wejściowe oraz przekazujaca je do controlera aktywnych rezerwacji 
         [HttpPost]
         public ActionResult Reservation(Reservation reservation)
         {
@@ -44,18 +48,12 @@ namespace Projekt_ANM.Controllers
                 }
                 else
                 {
-                  //  ViewBag.Message = String.Format("Data1{0}:\\n Data2:{1}", reservation.Date1, reservation.Date2);
                     TempData["data"] = reservation;
                     return new RedirectResult(@"~\RentalCars\Index");
                 }
             }
-
-            // If we got this far, something failed, redisplay form
             return View(reservation);
         }
-       
-    
-       
-       
+
     }
 }

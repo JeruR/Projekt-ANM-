@@ -10,29 +10,30 @@ using Projekt_ANM.DAL;
 using Projekt_ANM.Models;
 
 namespace Projekt_ANM.Controllers
-{
+{    
+    //Zabezpieczenie przed nieautoryzowanym dostępem
     [Authorize]
     public class RentalCarsController : Controller
     {
         private ANMContext db = new ANMContext();
         private static Reservation _reservation;
-        // GET: RentalCars
+        // GET: Załadowanie widoku samochodów do wypożyczenia
         public ActionResult Index()
         {
+            //Weryfikacja które samochody są aktualnie dostępne do zarezerwowania
             if (TempData["data"] != null)
             {
                 _reservation = (Reservation)TempData["data"];
-                // return View(db.Current.ToList().Where(m => m.RentalDate <= b.Date1 && m.ReturnDate >= b.Date2));
                 db.RentalCars.RemoveRange(db.RentalCars.Where(x => x.ID == x.ID));
                 List<Current> notRented = new List<Current>();
                 foreach (var ren in db.Current.Where(m => m.ReturnDate >= DateTime.Now).ToList())
                 {
-                   // if (ren.RentalDate <= _reservation.Date1 && ren.ReturnDate >= _reservation.Date2)
-                    if (ren.RentalDate <= _reservation.Date1 && ren.ReturnDate <= _reservation.Date1)
-                    {
+                    if ((_reservation.Date1 >= ren.RentalDate  && _reservation.Date1 <= ren.ReturnDate) || (_reservation.Date2 >= ren.RentalDate && _reservation.Date2 <= ren.ReturnDate) || (_reservation.Date1 <= ren.RentalDate && _reservation.Date2 >= ren.ReturnDate))
+                    {   
                         notRented.Add(ren);
                     }
                 }
+
                 foreach (var item in db.Cars)
                 {
                     var a = notRented.Find(x => x.CarRegistration == item.CarRegistration);
@@ -51,6 +52,7 @@ namespace Projekt_ANM.Controllers
                 return new RedirectResult(@"~\Current\Index");
             }
         }
+        //Funkcja przypisuję wypożyczenie samochodu do użytkownika
         public ActionResult Rent(int? id)
         {
             RentalCar rentalCar = db.RentalCars.Find(id);
@@ -60,39 +62,6 @@ namespace Projekt_ANM.Controllers
             return new RedirectResult(@"~\Current\Index");
         }
 
-
-        // GET: RentalCars/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            RentalCar rentalCar = db.RentalCars.Find(id);
-            if (rentalCar == null)
-            {
-                return HttpNotFound();
-            }
-            return View(rentalCar);
-        }
-
-        // POST: RentalCars/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,CarName,CarRegistration,VIN,ProductionYear")] RentalCar rentalCar)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(rentalCar).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(rentalCar);
-        }
-
-     
         protected override void Dispose(bool disposing)
         {
             if (disposing)

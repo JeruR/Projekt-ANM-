@@ -7,6 +7,7 @@
 <h2>Wypożycz samochód</h2>
 
 
+@Html.Raw(TempData["msg"])
 
 <table class="table">
     <tr>
@@ -41,7 +42,7 @@
                 @Html.DisplayFor(modelItem => item.ProductionYear)
             </td>
             <td>
-                @Html.ActionLink("Wypożycz", "Rent", new { id = item.ID }, new { @class = "btn btn-success" }) 
+                @Html.ActionLink("Wypożycz", "Rent", new { id = item.ID }, new { @class = "btn btn-success" })
             </td>
         </tr>
     }

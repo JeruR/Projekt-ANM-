@@ -10,29 +10,30 @@ using Projekt_ANM.DAL;
 using Projekt_ANM.Models;
 
 namespace Projekt_ANM.Controllers
-{
+{    
+    //Zabezpieczenie przed nieautoryzowanym dostępem
     [Authorize]
     public class CurrentController : Controller
     {
         private ANMContext db = new ANMContext();
 
+        // GET: Załadowanie widoku wszystkich aktualnych rezerwacji
         [HttpGet]
         public ActionResult Index()
         {
             return View(db.Current.ToList().Where(m => m.ReturnDate >= DateTime.Now).OrderBy(x => x.RentalDate));
 
         }
-             
+
+        // GET: Załadowanie widoku wszystkich historycznych rezerwacji    
         [HttpGet]
         public ActionResult Histories()
         {
             return View(db.Current.Where(m => m.ReturnDate <= DateTime.Now).ToList().OrderBy(x => x.RentalDate));
         }
- 
 
-        // GET: Current/Delete/5
+        // GET: Załadowanie widoku anulowania rezerwacji dostępne tylko dla Administratora
         [Authorize(Roles = "Administrator")]
-
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -47,7 +48,7 @@ namespace Projekt_ANM.Controllers
             return View(current);
         }
 
-        // POST: Current/Delete/5
+        // POST: Funkcja anulująca rezerwacje
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
