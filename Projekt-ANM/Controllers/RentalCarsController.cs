@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Projekt_ANM.DAL;
 using Projekt_ANM.Models;
 
@@ -56,7 +57,7 @@ namespace Projekt_ANM.Controllers
         public ActionResult Rent(int? id)
         {
             RentalCar rentalCar = db.RentalCars.Find(id);
-            db.Current.Add(new Current { ID = rentalCar.ID, Car = rentalCar.CarName, CarRegistration = rentalCar.CarRegistration, RentalDate = _reservation.Date1, ReturnDate=_reservation.Date2});
+            db.Current.Add(new Current { ID = rentalCar.ID, Car = rentalCar.CarName, CarRegistration = rentalCar.CarRegistration, RentalDate = _reservation.Date1, ReturnDate=_reservation.Date2, userid=User.Identity.Name });
             db.RentalCars.Remove(rentalCar);
             db.SaveChanges();
             return new RedirectResult(@"~\Current\Index");

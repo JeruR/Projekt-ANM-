@@ -17,6 +17,8 @@ namespace Projekt_ANM.Models
         [DisplayName("Data wypożyczenia")]
         public DateTime RentalDate { get; set; }
         [DisplayName("Data zwrotu")]
-        public DateTime ReturnDate { get; set; }
+        public DateTime ReturnDate { get; set; }   
+        [DisplayName("Osoba")]
+        public string userid { get; set; }
     }
 }

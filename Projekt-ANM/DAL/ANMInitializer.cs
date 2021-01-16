@@ -34,10 +34,10 @@ namespace Projekt_ANM.DAL
 
             var current = new List<Current>
             {
-                new Current{ Car="Volkswagen Golf VII",CarRegistration="PO12314",RentalDate=DateTime.Parse("2021-02-03"),ReturnDate=DateTime.Parse("2021-02-03") },
-                new Current{ Car="Opel Corsa",CarRegistration="PO33333",RentalDate=DateTime.Parse("2021-01-03"),ReturnDate=DateTime.Parse("2021-01-03") },
-                new Current{ Car="Opel Astra",CarRegistration="PO12377",RentalDate=DateTime.Parse("2021-01-05"),ReturnDate=DateTime.Parse("2021-01-08") },
-                new Current{ Car="Skoda Fabia",CarRegistration="PO12348",RentalDate=DateTime.Parse("2021-02-05"),ReturnDate=DateTime.Parse("2021-02-08") }
+                new Current{ Car="Volkswagen Golf VII",CarRegistration="PO12314",RentalDate=DateTime.Parse("2021-02-03"),ReturnDate=DateTime.Parse("2021-02-03"),userid="Filip Ptak" },
+                new Current{ Car="Opel Corsa",CarRegistration="PO33333",RentalDate=DateTime.Parse("2021-01-03"),ReturnDate=DateTime.Parse("2021-01-03"),userid="Paweł Kowalski"  },
+                new Current{ Car="Opel Astra",CarRegistration="PO12377",RentalDate=DateTime.Parse("2021-01-05"),ReturnDate=DateTime.Parse("2021-01-08"),userid="Stefan Kwiat"  },
+                new Current{ Car="Skoda Fabia",CarRegistration="PO12348",RentalDate=DateTime.Parse("2021-02-05"),ReturnDate=DateTime.Parse("2021-02-08"),userid="Paweł Czajka"  }
             };
             current.ForEach(s => context.Current.Add(s));
             context.SaveChanges();
